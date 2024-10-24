@@ -128,7 +128,7 @@ class PBLplot:
                                       line_width_list=2.5, line_label_list=None, 
                                       shade_levels=np.arange(-0.1, 0.101, 0.01), 
                                       shade_cmap='coolwarm', shade_extend='both', 
-                                      shade_cbar_label=r"$\overline{w'\theta'}$ [K]"):
+                                      shade_cbar_label=r"$\overline{w'\theta'}$ [K m/s]"):
         """
         
 
