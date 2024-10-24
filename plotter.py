@@ -29,7 +29,7 @@ class PBLplot:
     def plot_hovmoller_pollutants(self, pollutant, xc, 
                               casename=None, title=r"Pollutant Hovmöller Diagram", 
                               figsize=[4,6], imgname=None, savefig=True, show=False, 
-                              xbnd=[0, 256000], xLocator=3200,
+                              xbnd=[0, 25600], xLocator=3200,
                               tbnd=[0, 720], toffset_min=300, tresolution_min=2, 
                               shade_levels=np.arange(2, 20.1, 2), 
                               shade_cmap='YlOrBr', shade_extend='both', 
