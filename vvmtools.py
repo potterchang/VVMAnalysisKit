@@ -276,6 +276,7 @@ class VVMTools:
     def find_BL_boundary(self, var, howToSearch, threshold=0.01):
         nt, nz = var.shape[0], var.shape[1]
         zc = self.DIM["zc"][0:nz]
+
         if howToSearch == "th_plus05K":
             # search the index where the var is closest to (first reach) var_sfc+0.5K
             thbot = var[:,1] 
@@ -293,12 +294,18 @@ class VVMTools:
             BLH2 = np.take(zc, ind_BLH2)
             return BLH2
         elif howToSearch == "threshold":
-            # search the index where var is first less than the threshold value
-            ind_posi = np.array((var - threshold) < 0)
-            adj = np.sum(ind_posi, axis=1) == 0
-            ind_BLH3 = np.argmax(ind_posi, axis=1) - adj
-            ind_BLH3 = np.ma.array(ind_BLH3, mask=ind_BLH3<0)
-            BLH3 = np.take(zc, ind_BLH3)
+            # search the index where var is first change from exceed over to less than the threshold value
+            ind_posi = np.array((var - threshold) >= 0)
+            BLH3 = np.zeros(nt)
+            for t in range(nt):
+                arr = ind_posi[t]
+                ind_BLH3 = 0
+                for i in range(1, len(arr)):
+                    if not arr[i] and arr[i - 1]:
+                        ind_BLH3 = i - 1
+                        continue
+                BLH3[t] = np.take(zc, ind_BLH3)
+            
             return BLH3
         elif howToSearch == "wth":
             BLHs = np.zeros((3,nt))
